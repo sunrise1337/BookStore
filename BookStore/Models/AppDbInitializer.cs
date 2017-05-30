@@ -5,7 +5,7 @@ using Microsoft.AspNet.Identity.EntityFramework;
 using System.Data.Entity;
 namespace RolesIdentityApp.Models
 {
-    public class AppDbInitializer : DropCreateDatabaseAlways<ApplicationDbContext>
+    public class AppDbInitializer : CreateDatabaseIfNotExists<ApplicationDbContext>
     {
         protected override void Seed(ApplicationDbContext context)
         {
@@ -22,8 +22,8 @@ namespace RolesIdentityApp.Models
             roleManager.Create(role2);
 
             // создаем пользователей
-            var admin = new ApplicationUser { Email = "admin@mail.ru", UserName = "admin" };
-            string password = "admin";
+            var admin = new ApplicationUser { UserName = "admin@mail.ru" };
+            string password = "admin123";
             var result = userManager.Create(admin, password);
 
             // если создание пользователя прошло успешно
@@ -34,8 +34,7 @@ namespace RolesIdentityApp.Models
                 userManager.AddToRole(admin.Id, role2.Name);
             }
 
-            context.Users.Add(admin);
-            context.SaveChanges();
+           
 
             base.Seed(context);
         }

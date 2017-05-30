@@ -11,7 +11,7 @@ namespace BookStore.Controllers
 {
     public class HomeController : Controller
     {
-        [Authorize]
+        
         public ActionResult Index()
         {
             IList<string> roles = new List<string> { "Роль не определена" };
@@ -23,7 +23,7 @@ namespace BookStore.Controllers
             return View(roles);
         }
 
-        [Authorize(Roles = "admin")]
+       
         public ActionResult About()
         {
             ViewBag.Message = "Your application description page.";
