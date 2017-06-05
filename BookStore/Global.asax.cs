@@ -1,5 +1,4 @@
 ﻿using BookStore.Models;
-using RolesIdentityApp.Models;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;

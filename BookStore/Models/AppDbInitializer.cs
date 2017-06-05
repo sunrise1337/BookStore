@@ -1,9 +1,7 @@
-﻿using BookStore;
-using BookStore.Models;
-using Microsoft.AspNet.Identity;
+﻿using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using System.Data.Entity;
-namespace RolesIdentityApp.Models
+namespace BookStore.Models
 {
     public class AppDbInitializer : CreateDatabaseIfNotExists<ApplicationDbContext>
     {

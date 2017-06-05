@@ -1,3 +1,5 @@
+using BookStore.Models;
+
 namespace BookStore.Migrations
 {
     using System;
@@ -20,13 +22,19 @@ namespace BookStore.Migrations
             //  You can use the DbSet<T>.AddOrUpdate() helper extension method 
             //  to avoid creating duplicate seed data. E.g.
             //
-            //    context.People.AddOrUpdate(
-            //      p => p.FullName,
-            //      new Person { FullName = "Andrew Peters" },
-            //      new Person { FullName = "Brice Lambson" },
-            //      new Person { FullName = "Rowan Miller" }
-            //    );
-            //
+
+            //Author author1 = new Author { FirstName = "Alexander", LastName = "Pushkin", Rate = 0 };
+            //Author author2 = new Author { FirstName = "Name", LastName = "LastName", Rate = 0 };
+            //Author author3 = new Author { FirstName = "Asd", LastName = "Qwe", Rate = 0 };
+            //context.Authors.Add(author1);
+            //context.Authors.Add(author2);
+            //context.Authors.Add(author3);
+
+            //Genre genre1 = new Genre { Name = "Genre 1" };
+            //context.Genres.Add(genre1);
+
+            //context.Books.Add(new Book { Name = "Book 1",ImagePath = "~/BookImages/DefaultImage.png", Genre = genre1, Author = author1, Rate = 0, Amount = 100, Price = 250 });
+
         }
     }
 }

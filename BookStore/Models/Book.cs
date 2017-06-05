@@ -9,7 +9,7 @@ namespace BookStore.Models
     {
         public int Id { get; set; }
         public string Name { get; set; }
-
+        public string ImagePath { get; set; }
         public int? GenreId{ get; set; }
         public virtual Genre Genre { get; set; }
 
@@ -19,7 +19,6 @@ namespace BookStore.Models
         public int Rate { get; set; }
         public double Price { get; set; }
         public int Amount { get; set; }
-        public bool isBooked { get; set; }
 
         public virtual ICollection<Comment> Comments { get; set; }
 
