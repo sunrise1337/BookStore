@@ -12,9 +12,19 @@
     <dl class="dl-horizontal">
 
         <dt>You are:</dt>
-        <dd>
-          @User.IsInRole("admin")
-        </dd>
+        @if (User.IsInRole("admin"))
+        {
+            <dd>
+                admin
+            </dd>
+        }
+        else
+        {
+            <dd>
+                user
+            </dd>
+        }
+
 
         <dt>Password:</dt>
         <dd>

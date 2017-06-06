@@ -1,0 +1,5 @@
+﻿@model BookStore.Models.ApplicationUser
+
+    @Html.DisplayFor(modelItem => Model.Karma)
+
+    @Ajax.ActionLink("-", "MinusKarma", new { uname = Model.UserName }, new AjaxOptions { UpdateTargetId = "karma", HttpMethod = "post" })
