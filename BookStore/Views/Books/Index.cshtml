@@ -14,16 +14,28 @@
 
 <h2>Index</h2>
 
-<p>
+<p class="pull-left">
     @Html.ActionLink("Create New", "Create")
 </p>
+<div class="pull-right">
+    @using (Html.BeginForm("Index", "Books", FormMethod.Post))
+    {
+        <div class="input-group" style="width: 150px;">
+            <input type="text" name="searchName" class="form-control input-sm pull-right" placeholder="Search">
+            <div class="input-group-btn">
+                <button class="btn btn-sm btn-success">Ok</button>
+            </div>
+        </div>
+    }
+</div>
 <table class="table">
     <tr>
         <th>
             @Html.DisplayNameFor(model => model.ImagePath)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Name)
+            @*@Html.DisplayNameFor(model => model.Name)*@
+            @Html.ActionLink("Name", "Index", new { sortOrder = ViewBag.NameSortParm })
         </th>
         <th>
             @Html.DisplayNameFor(model => model.Author.FirstName)
@@ -36,7 +48,8 @@
             @Html.DisplayNameFor(model => model.Rate)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Price)
+            @*@Html.DisplayNameFor(model => model.Price)*@
+            @Html.ActionLink("Price", "Index", new { sortOrder = ViewBag.PriceSortParm })
         </th>
         <th>
             @Html.DisplayNameFor(model => model.Amount)
