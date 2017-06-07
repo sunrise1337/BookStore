@@ -9,7 +9,7 @@
 <p>
     @Html.ActionLink("Create New", "Create")
 </p>
-<table class="table">
+<table class="table" id="karma">
     <tr>
         <th>
             @Html.DisplayNameFor(model => model.UserName)
@@ -31,10 +31,11 @@
         <td>
             @Html.DisplayFor(modelItem => item.UserName)
         </td>
-        <td id="karma">
+        <td id='karma@(item.Id)'>
             @Html.DisplayFor(modelItem => item.Karma)
 
-            @Ajax.ActionLink("-", "MinusKarma", new { uname = item.UserName }, new AjaxOptions { UpdateTargetId = "karma", InsertionMode = InsertionMode.Replace })
+            @Ajax.ActionLink("-", "MinusKarma", new { uname = item.UserName }, new AjaxOptions { UpdateTargetId = "karma" + item.Id, InsertionMode = InsertionMode.Replace, HttpMethod = "POST" })
+            @Ajax.ActionLink("+", "PlusKarma", new { uname = item.UserName }, new AjaxOptions { UpdateTargetId = "karma" + item.Id, InsertionMode = InsertionMode.Replace, HttpMethod = "POST" })
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.Purchased.Count)

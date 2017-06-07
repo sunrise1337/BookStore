@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.Security;
 
 namespace BookStore.Controllers
 {
@@ -31,21 +32,42 @@ namespace BookStore.Controllers
             return View(context.Users.ToList());
         }
 
-        public ActionResult MinusKarma(string uname)
+        public async System.Threading.Tasks.Task<ActionResult> MinusKarma(string uname)
         {
             var u = new ApplicationUser();
 
             foreach (var user in context.Users)
             {
-                if(user.UserName == uname)
+                if (user.UserName == uname)
                 {
                     user.Karma -= 5;
+                    u = user;
+
+                   
+                }
+            }
+
+
+
+            context.SaveChanges();
+            return PartialView("MinusKarma", u);
+        }
+
+        public ActionResult PlusKarma(string uname)
+        {
+            var u = new ApplicationUser();
+
+            foreach (var user in context.Users)
+            {
+                if (user.UserName == uname)
+                {
+                    user.Karma += 5;
                     u = user;
                 }
             }
 
             context.SaveChanges();
-            return PartialView(u);
+            return PartialView("MinusKarma", u);
         }
 
         public ActionResult About()
