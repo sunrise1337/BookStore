@@ -38,14 +38,17 @@
             @Html.ActionLink("Name", "Index", new { sortOrder = ViewBag.NameSortParm })
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Author.FirstName)
+            @*@Html.DisplayNameFor(model => model.Author.FirstName)*@
+            @Html.ActionLink("Author", "Index", new { sortOrder = ViewBag.AuthorSortParm })
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Genre.Name)
+            @*@Html.DisplayNameFor(model => model.Genre.Name)*@
+            @Html.ActionLink("Genre", "Index", new { sortOrder = ViewBag.GenreSortParm })
         </th>
 
         <th>
-            @Html.DisplayNameFor(model => model.Rate)
+            @*@Html.DisplayNameFor(model => model.Rate)*@
+            @Html.ActionLink("Rate", "Index", new { sortOrder = ViewBag.RateSortParm })
         </th>
         <th>
             @*@Html.DisplayNameFor(model => model.Price)*@

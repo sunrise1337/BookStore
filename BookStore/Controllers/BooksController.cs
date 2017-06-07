@@ -22,8 +22,14 @@ namespace BookStore.Controllers
         {
             ViewBag.NameSortParm = String.IsNullOrEmpty(sortOrder) ? "Name desc" : "";
             ViewBag.PriceSortParm = sortOrder == "Price" ? "Price desc" : "Price";
+            ViewBag.GenreSortParm = sortOrder == "Genre" ? "Genre desc" : "Genre";
+            ViewBag.AuthorSortParm = sortOrder == "Author" ? "Author desc" : "Author";
+            ViewBag.RateSortParm = sortOrder == "Rate" ? "Rate desc" : "Rate";
 
             var books = db.Books.Include(b => b.Author).Include(b => b.Genre);
+
+            ViewBag.TopBooks = books.OrderByDescending(i => i.Rate).Take(5).ToList();
+            ViewBag.TopAuthors = db.Authors.OrderByDescending(i => i.Rate).Take(5).ToList();
 
             switch (sortOrder)
             {
@@ -36,6 +42,24 @@ namespace BookStore.Controllers
                 case "Price desc":
                     books = books.OrderByDescending(s => s.Price);
                     break;
+                case "Genre":
+                    books = books.OrderBy(s => s.Genre.Name);
+                    break;
+                case "Genre desc":
+                    books = books.OrderByDescending(s => s.Genre.Name);
+                    break;
+                case "Author":
+                    books = books.OrderBy(s => s.Author.FirstName);
+                    break;
+                case "Author desc":
+                    books = books.OrderByDescending(s => s.Author.FirstName);
+                    break;
+                case "Rate":
+                    books = books.OrderBy(s => s.Rate);
+                    break;
+                case "Rate desc":
+                    books = books.OrderByDescending(s => s.Rate);
+                    break;
                 default:
                     books = books.OrderBy(s => s.Name);
                     break;
@@ -47,7 +71,6 @@ namespace BookStore.Controllers
                 //Search
                 books = books.Where(x => x.Name.Contains(searchName) || x.Author.FirstName.Contains(searchName) 
                 || x.Author.LastName.Contains(searchName) || x.Genre.Name.Contains(searchName));
-                //return View(books.ToList());
             }
 
             return View(books.ToList());
