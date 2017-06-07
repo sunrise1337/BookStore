@@ -18,20 +18,39 @@ namespace BookStore.Controllers
 
         #region Index
         // GET: Books
-        public ActionResult Index(string searchName)
+        public ActionResult Index(string searchName, string sortOrder)
         {
+            ViewBag.NameSortParm = String.IsNullOrEmpty(sortOrder) ? "Name desc" : "";
+            ViewBag.PriceSortParm = sortOrder == "Price" ? "Price desc" : "Price";
+
+            var books = db.Books.Include(b => b.Author).Include(b => b.Genre);
+
+            switch (sortOrder)
+            {
+                case "Name desc":
+                    books = books.OrderByDescending(s => s.Name);
+                    break;
+                case "Price":
+                    books = books.OrderBy(s => s.Price);
+                    break;
+                case "Price desc":
+                    books = books.OrderByDescending(s => s.Price);
+                    break;
+                default:
+                    books = books.OrderBy(s => s.Name);
+                    break;
+            }
+
+
             if (!string.IsNullOrEmpty(searchName))
             {
                 //Search
-                var books = db.Books.Include(b => b.Author).Include(b => b.Genre).Where(x => x.Name.Contains(searchName) 
-                || x.Author.FirstName.Contains(searchName) || x.Author.LastName.Contains(searchName) || x.Genre.Name.Contains(searchName));
-                return View(books.ToList());
+                books = books.Where(x => x.Name.Contains(searchName) || x.Author.FirstName.Contains(searchName) 
+                || x.Author.LastName.Contains(searchName) || x.Genre.Name.Contains(searchName));
+                //return View(books.ToList());
             }
-            else
-            {
-                var books = db.Books.Include(b => b.Author).Include(b => b.Genre);
-                return View(books.ToList());
-            }
+
+            return View(books.ToList());
         }
 
         #endregion
@@ -109,9 +128,6 @@ namespace BookStore.Controllers
         {
             if (ModelState.IsValid)
             {
-
-
-
                 db.Books.Add(book);
                 db.SaveChanges();
                 return RedirectToAction("Index");
@@ -177,6 +193,15 @@ namespace BookStore.Controllers
             }
             ViewBag.AuthorId = new SelectList(db.Authors, "Id", "FirstName", book.AuthorId);
             ViewBag.GenreId = new SelectList(db.Genres, "Id", "Name", book.GenreId);
+
+            string[] filePaths = Directory.GetFiles(Server.MapPath("~/BookImages/"));
+            List<string> files = new List<string>();
+            foreach (string filePath in filePaths)
+            {
+                files.Add("~/BookImages/" + Path.GetFileName(filePath));
+            }
+            ViewBag.Files = files;
+
             return View(book);
         }
 

@@ -34,7 +34,8 @@
             @Html.DisplayNameFor(model => model.ImagePath)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Name)
+            @*@Html.DisplayNameFor(model => model.Name)*@
+            @Html.ActionLink("Name", "Index", new { sortOrder = ViewBag.NameSortParm })
         </th>
         <th>
             @Html.DisplayNameFor(model => model.Author.FirstName)
@@ -47,7 +48,8 @@
             @Html.DisplayNameFor(model => model.Rate)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Price)
+            @*@Html.DisplayNameFor(model => model.Price)*@
+            @Html.ActionLink("Price", "Index", new { sortOrder = ViewBag.PriceSortParm })
         </th>
         <th>
             @Html.DisplayNameFor(model => model.Amount)
