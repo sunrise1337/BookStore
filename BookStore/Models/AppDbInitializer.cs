@@ -3,7 +3,7 @@ using Microsoft.AspNet.Identity.EntityFramework;
 using System.Data.Entity;
 namespace BookStore.Models
 {
-    public class AppDbInitializer : CreateDatabaseIfNotExists<ApplicationDbContext>
+    public class AppDbInitializer : DropCreateDatabaseAlways<ApplicationDbContext>
     {
         protected override void Seed(ApplicationDbContext context)
         {

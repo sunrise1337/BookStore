@@ -1,0 +1,53 @@
+﻿@model IEnumerable<BookStore.Models.ApplicationUser>
+
+@{
+    ViewBag.Title = "Admin";
+}
+
+<h2>Admin</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table" id="karma">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.UserName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Karma)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Purchased)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Wishlist)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.UserName)
+        </td>
+        <td id='karma@(item.Id)'>
+            @Html.DisplayFor(modelItem => item.Karma)
+
+            @Ajax.ActionLink("-", "MinusKarma", new { uname = item.UserName }, new AjaxOptions { UpdateTargetId = "karma" + item.Id, InsertionMode = InsertionMode.Replace, HttpMethod = "POST" })
+            @Ajax.ActionLink("+", "PlusKarma", new { uname = item.UserName }, new AjaxOptions { UpdateTargetId = "karma" + item.Id, InsertionMode = InsertionMode.Replace, HttpMethod = "POST" })
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Purchased.Count)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Wishlist.Count)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.Id })
+        </td>
+    </tr>
+}
+
+</table>

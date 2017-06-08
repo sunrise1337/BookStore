@@ -192,7 +192,6 @@ C:\Users\sunrise\Documents\GitHub\BookStore\BookStore\obj\Debug\BookStore.dll
 C:\Users\sunrise\Documents\GitHub\BookStore\BookStore\obj\Debug\BookStore.pdb
 C:\Users\sunrise\Documents\GitHub\BookStore\BookStore\obj\Debug\BookStore.Migrations.InitialCreate.resources
 C:\Users\sunrise\Documents\GitHub\BookStore\BookStore\obj\Debug\BookStore.csproj.GenerateResource.Cache
-C:\Users\sunrise\Documents\GitHub\BookStore\BookStore\obj\Debug\BookStore.Migrations.models.resources
 C:\Users\Zemlyanickiy\Documents\GitHub\BookStore\BookStore\bin\ApplicationInsights.config
 C:\Users\Zemlyanickiy\Documents\GitHub\BookStore\BookStore\bin\roslyn\csc.exe
 C:\Users\Zemlyanickiy\Documents\GitHub\BookStore\BookStore\bin\roslyn\csc.exe.config
@@ -292,6 +291,10 @@ C:\Users\Zemlyanickiy\Documents\GitHub\BookStore\BookStore\obj\Debug\BookStore.p
 C:\Users\Zemlyanickiy\Documents\GitHub\BookStore\BookStore\obj\Debug\BookStore.Migrations.InitialCreate.resources
 C:\Users\Zemlyanickiy\Documents\GitHub\BookStore\BookStore\obj\Debug\BookStore.csproj.GenerateResource.Cache
 C:\Users\Zemlyanickiy\Documents\GitHub\BookStore\BookStore\obj\Debug\BookStore.Migrations.BookAdd_Field.resources
+<<<<<<< HEAD
+C:\Users\sunrise\Documents\GitHub\BookStore\BookStore\obj\Debug\BookStore.Migrations.BookAdd_Field.resources
+C:\Users\sunrise\Documents\GitHub\BookStore\BookStore\obj\Debug\BookStore.Migrations.BooksAdd.resources
+=======
 C:\Users\inick\Documents\GitHub\BookStore\BookStore\bin\ApplicationInsights.config
 C:\Users\inick\Documents\GitHub\BookStore\BookStore\bin\roslyn\csc.exe
 C:\Users\inick\Documents\GitHub\BookStore\BookStore\bin\roslyn\csc.exe.config
@@ -391,3 +394,4 @@ C:\Users\inick\Documents\GitHub\BookStore\BookStore\obj\Debug\BookStore.Migratio
 C:\Users\inick\Documents\GitHub\BookStore\BookStore\obj\Debug\BookStore.csproj.GenerateResource.Cache
 C:\Users\inick\Documents\GitHub\BookStore\BookStore\obj\Debug\BookStore.dll
 C:\Users\inick\Documents\GitHub\BookStore\BookStore\obj\Debug\BookStore.pdb
+>>>>>>> origin/tmp
