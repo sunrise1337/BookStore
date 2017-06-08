@@ -1,0 +1,51 @@
+﻿@model BookStore.Models.Book
+
+@{
+    ViewBag.Title = "BuyBook";
+}
+<style>
+    b {
+        text-transform: uppercase; /* Заглавные буквы */
+    }
+</style>
+
+<div>
+    <hr />
+    <h4>You just bought a book <b>@Model.Name</b></h4>
+    <hr/>
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Name)
+        </dd>
+
+        <dt>
+            Author
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Author.LastName)
+        </dd>
+
+        <dt>
+            Genre
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Genre.Name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Price)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Price)
+        </dd>
+    </dl>
+</div>
+<p><a class="btn btn-primary" data-fancybox-type="iframe"
+       href="@Url.Action("Index", "Books")">Back to List</a></p>

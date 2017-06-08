@@ -248,6 +248,29 @@ namespace BookStore.Controllers
         #endregion
 
 
+        #region BuyBook
+        
+        public ActionResult BuyBook(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Book book = db.Books.Find(id);
+            if (book == null)
+            {
+                return HttpNotFound();
+            }
+
+            db.Books.Find(id).Amount -= 1;
+            db.SaveChanges();
+
+            return View(book);
+        }
+
+        #endregion
+
+
         #region Delete
 
         // GET: Books/Delete/5
@@ -274,6 +297,61 @@ namespace BookStore.Controllers
             db.Books.Remove(book);
             db.SaveChanges();
             return RedirectToAction("Index");
+        }
+
+        #endregion
+
+
+        #region Create Author
+
+        public ActionResult CreateAuthor()
+        {
+            //ViewBag.AuthorId = new SelectList(db.Authors, "Id", "FirstName");
+            //ViewBag.GenreId = new SelectList(db.Genres, "Id", "Name");
+
+            return View();
+        }
+
+        // POST: Authors/Create
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult CreateAuthor(Author author)
+        {
+            if (ModelState.IsValid)
+            {
+                db.Authors.Add(author);
+                db.SaveChanges();
+                return RedirectToAction("Index");
+            }
+
+            //ViewBag.AuthorId = new SelectList(db.Authors, "Id", "FirstName", book.AuthorId);
+            //ViewBag.GenreId = new SelectList(db.Genres, "Id", "Name", book.GenreId);
+            return View(author);
+        }
+
+        #endregion
+
+
+        #region Create Genre
+
+        public ActionResult CreateGenre()
+        {
+            return View();
+        }
+
+        // POST: Genres/Create
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult CreateGenre(Genre genre)
+        {
+            if (ModelState.IsValid)
+            {
+                db.Genres.Add(genre);
+                db.SaveChanges();
+                return RedirectToAction("Index");
+            }
+            
+            return View(genre);
         }
 
         #endregion
