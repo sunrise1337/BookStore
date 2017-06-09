@@ -15,6 +15,7 @@ using Microsoft.AspNet.Identity.Owin;
 
 namespace BookStore.Controllers
 {
+    [Authorize]
     public class BooksController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();
@@ -28,6 +29,10 @@ namespace BookStore.Controllers
             ViewBag.GenreSortParm = sortOrder == "Genre" ? "Genre desc" : "Genre";
             ViewBag.AuthorSortParm = sortOrder == "Author" ? "Author desc" : "Author";
             ViewBag.RateSortParm = sortOrder == "Rate" ? "Rate desc" : "Rate";
+
+            ApplicationUserManager userManager = HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
+            ApplicationUser user = userManager.FindById(User.Identity.GetUserId());
+            ViewBag.WishList = db.Users.Find(user.Id).Wishlist.ToList();
 
             var books = db.Books.Include(b => b.Author).Include(b => b.Genre);
 
@@ -276,6 +281,28 @@ namespace BookStore.Controllers
             db.SaveChanges();
 
             return View(book);
+        }
+
+        [Authorize]
+        public ActionResult WishBook(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Book book = db.Books.Find(id);
+            if (book == null)
+            {
+                return HttpNotFound();
+            }
+
+            ApplicationUserManager userManager = HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
+            ApplicationUser user = userManager.FindById(User.Identity.GetUserId());
+            db.Users.Find(user.Id).Wishlist.Add(book);
+            db.SaveChanges();
+
+            //Content("<script language='javascript' type='text/javascript'>alert('This book in your WishList!');</script>");
+            return RedirectToAction("Index");
         }
 
         #endregion
