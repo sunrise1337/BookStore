@@ -1,3 +1,9 @@
+C:\Users\inick\Documents\GitHub\BookStore\BookStore\obj\Debug\BookStore.csprojResolveAssemblyReference.cache
+C:\Users\inick\Documents\GitHub\BookStore\BookStore\obj\Debug\BookStore.Migrations.InitialCreate.resources
+C:\Users\inick\Documents\GitHub\BookStore\BookStore\obj\Debug\BookStore.Migrations.BookAdd_Field.resources
+C:\Users\inick\Documents\GitHub\BookStore\BookStore\obj\Debug\BookStore.Migrations.BooksAdd.resources
+C:\Users\inick\Documents\GitHub\BookStore\BookStore\obj\Debug\BookStore.Migrations.userBan.resources
+C:\Users\inick\Documents\GitHub\BookStore\BookStore\obj\Debug\BookStore.csproj.GenerateResource.Cache
 C:\Users\inick\Documents\GitHub\BookStore\BookStore\bin\ApplicationInsights.config
 C:\Users\inick\Documents\GitHub\BookStore\BookStore\bin\roslyn\csc.exe
 C:\Users\inick\Documents\GitHub\BookStore\BookStore\bin\roslyn\csc.exe.config
@@ -63,6 +69,7 @@ C:\Users\inick\Documents\GitHub\BookStore\BookStore\bin\System.Web.WebPages.dll
 C:\Users\inick\Documents\GitHub\BookStore\BookStore\bin\System.Web.WebPages.Razor.dll
 C:\Users\inick\Documents\GitHub\BookStore\BookStore\bin\WebGrease.dll
 C:\Users\inick\Documents\GitHub\BookStore\BookStore\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml
+C:\Users\inick\Documents\GitHub\BookStore\BookStore\bin\Newtonsoft.Json.xml
 C:\Users\inick\Documents\GitHub\BookStore\BookStore\bin\System.Web.Helpers.xml
 C:\Users\inick\Documents\GitHub\BookStore\BookStore\bin\System.Web.Mvc.xml
 C:\Users\inick\Documents\GitHub\BookStore\BookStore\bin\System.Web.Optimization.xml
@@ -71,7 +78,6 @@ C:\Users\inick\Documents\GitHub\BookStore\BookStore\bin\System.Web.WebPages.xml
 C:\Users\inick\Documents\GitHub\BookStore\BookStore\bin\System.Web.WebPages.Deployment.xml
 C:\Users\inick\Documents\GitHub\BookStore\BookStore\bin\System.Web.WebPages.Razor.xml
 C:\Users\inick\Documents\GitHub\BookStore\BookStore\bin\Antlr3.Runtime.pdb
-C:\Users\inick\Documents\GitHub\BookStore\BookStore\bin\Newtonsoft.Json.xml
 C:\Users\inick\Documents\GitHub\BookStore\BookStore\bin\EntityFramework.xml
 C:\Users\inick\Documents\GitHub\BookStore\BookStore\bin\EntityFramework.SqlServer.xml
 C:\Users\inick\Documents\GitHub\BookStore\BookStore\bin\Microsoft.AspNet.Identity.Core.xml
@@ -91,10 +97,5 @@ C:\Users\inick\Documents\GitHub\BookStore\BookStore\bin\Microsoft.AI.DependencyC
 C:\Users\inick\Documents\GitHub\BookStore\BookStore\bin\Microsoft.AI.ServerTelemetryChannel.xml
 C:\Users\inick\Documents\GitHub\BookStore\BookStore\bin\Microsoft.AI.WindowsServer.xml
 C:\Users\inick\Documents\GitHub\BookStore\BookStore\bin\Microsoft.AI.Web.xml
-C:\Users\inick\Documents\GitHub\BookStore\BookStore\obj\Debug\BookStore.csprojResolveAssemblyReference.cache
-C:\Users\inick\Documents\GitHub\BookStore\BookStore\obj\Debug\BookStore.Migrations.InitialCreate.resources
-C:\Users\inick\Documents\GitHub\BookStore\BookStore\obj\Debug\BookStore.Migrations.BookAdd_Field.resources
-C:\Users\inick\Documents\GitHub\BookStore\BookStore\obj\Debug\BookStore.Migrations.BooksAdd.resources
-C:\Users\inick\Documents\GitHub\BookStore\BookStore\obj\Debug\BookStore.csproj.GenerateResource.Cache
 C:\Users\inick\Documents\GitHub\BookStore\BookStore\obj\Debug\BookStore.dll
 C:\Users\inick\Documents\GitHub\BookStore\BookStore\obj\Debug\BookStore.pdb

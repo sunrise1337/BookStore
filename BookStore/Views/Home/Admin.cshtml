@@ -6,13 +6,16 @@
 
 <h2>Admin</h2>
 
-<p>
+@*<p>
     @Html.ActionLink("Create New", "Create")
-</p>
+</p>*@
 <table class="table" id="karma">
     <tr>
         <th>
             @Html.DisplayNameFor(model => model.UserName)
+        </th>
+        <th>
+            Role
         </th>
         <th>
             @Html.DisplayNameFor(model => model.Karma)
@@ -31,6 +34,18 @@
         <td>
             @Html.DisplayFor(modelItem => item.UserName)
         </td>
+        @if (item.Roles.Count >= 2)
+        {
+            <td id='role@(item.Id)'>
+                Admin
+            </td>
+        }
+        else
+        {
+            <td id='role@(item.Id)'>
+                User
+            </td>
+        }
         <td id='karma@(item.Id)'>
             @Html.DisplayFor(modelItem => item.Karma)
 
@@ -38,15 +53,14 @@
             @Ajax.ActionLink("+", "PlusKarma", new { uname = item.UserName }, new AjaxOptions { UpdateTargetId = "karma" + item.Id, InsertionMode = InsertionMode.Replace, HttpMethod = "POST" })
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.Purchased.Count)
+            @Html.ActionLink(item.Purchased.Count.ToString(), "GetPurchased", new { uname = item.UserName })
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.Wishlist.Count)
+            @Html.ActionLink(item.Wishlist.Count.ToString(), "GetWishlist", new { uname = item.UserName })
         </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
+        @*<td>
             @Html.ActionLink("Delete", "Delete", new { id=item.Id })
-        </td>
+        </td>*@
     </tr>
 }
 

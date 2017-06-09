@@ -30,9 +30,11 @@ namespace BookStore.Controllers
             ViewBag.AuthorSortParm = sortOrder == "Author" ? "Author desc" : "Author";
             ViewBag.RateSortParm = sortOrder == "Rate" ? "Rate desc" : "Rate";
 
+
             ApplicationUserManager userManager = HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
             ApplicationUser user = userManager.FindById(User.Identity.GetUserId());
             ViewBag.WishList = db.Users.Find(user.Id).Wishlist.ToList();
+
 
             var books = db.Books.Include(b => b.Author).Include(b => b.Genre);
 
@@ -272,8 +274,10 @@ namespace BookStore.Controllers
             }
 
             db.Books.Find(id).Amount -= 1;
+
             db.Books.Find(id).Rate += 1;
             db.Books.Find(id).Author.Rate += 1;
+
 
             ApplicationUserManager userManager = HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
             ApplicationUser user = userManager.FindById(User.Identity.GetUserId());
@@ -304,6 +308,7 @@ namespace BookStore.Controllers
             //Content("<script language='javascript' type='text/javascript'>alert('This book in your WishList!');</script>");
             return RedirectToAction("Index");
         }
+
 
         #endregion
 

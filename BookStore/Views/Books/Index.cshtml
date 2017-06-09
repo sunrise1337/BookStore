@@ -122,7 +122,6 @@ else
 {
   <h2 class="pull-left">Books</h2>
 }
-
 <div class="pull-right">
     @using (Html.BeginForm("Index", "Books", FormMethod.Post))
     {
@@ -172,7 +171,9 @@ else
             <td>
                 @*@Html.DisplayFor(modelItem => item.ImagePath)*@
                 <a data-fancybox-type="iframe"
-                   href="@Url.Action("Details", "Books", new { id = item.Id })"><img src="@Url.Content(item.ImagePath)" class="imgBox" /></a>
+                   href="@Url.Action("Details", "Books", new { id = item.Id })"><img src="@Url.Content(item.ImagePath)" class="imgBox" />
+                </a>
+                
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Name)

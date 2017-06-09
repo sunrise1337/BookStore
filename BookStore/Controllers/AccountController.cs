@@ -22,9 +22,26 @@ namespace BookStore.Controllers
         {
         }
 
+        public ActionResult MakeAdmin(string uname)
+        {
+            var u = new ApplicationUser();
+
+            foreach (var user in UserManager.Users)
+            {
+                if (user.UserName == uname)
+                {
+                    UserManager.AddToRole(user.Id, "admin");
+                }
+            }
 
 
-        public AccountController(ApplicationUserManager userManager, ApplicationSignInManager signInManager )
+
+            UpdateModel(UserManager.Users);
+            return PartialView("ChangeRole", u);
+        }
+
+
+        public AccountController(ApplicationUserManager userManager, ApplicationSignInManager signInManager)
         {
             UserManager = userManager;
             SignInManager = signInManager;
@@ -36,9 +53,9 @@ namespace BookStore.Controllers
             {
                 return _signInManager ?? HttpContext.GetOwinContext().Get<ApplicationSignInManager>();
             }
-            private set 
-            { 
-                _signInManager = value; 
+            private set
+            {
+                _signInManager = value;
             }
         }
 
@@ -75,13 +92,30 @@ namespace BookStore.Controllers
                 return View(model);
             }
 
+
+
+
             // This doesn't count login failures towards account lockout
             // To enable password failures to trigger account lockout, change to shouldLockout: true
             var result = await SignInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, shouldLockout: false);
             switch (result)
             {
                 case SignInStatus.Success:
-                    return RedirectToLocal(returnUrl);
+                    {
+                        foreach (var user in UserManager.Users)
+                        {
+                            if (user.UserName == model.Email)
+                            {
+                                if (user.isBanned)
+                                {
+                                    return View("Lockout");
+                                }
+                            }
+                        }
+
+                        return RedirectToLocal(returnUrl);
+                    }
+
                 case SignInStatus.LockedOut:
                     return View("Lockout");
                 case SignInStatus.RequiresVerification:
@@ -123,7 +157,7 @@ namespace BookStore.Controllers
             // If a user enters incorrect codes for a specified amount of time then the user account 
             // will be locked out for a specified amount of time. 
             // You can configure the account lockout settings in IdentityConfig
-            var result = await SignInManager.TwoFactorSignInAsync(model.Provider, model.Code, isPersistent:  model.RememberMe, rememberBrowser: model.RememberBrowser);
+            var result = await SignInManager.TwoFactorSignInAsync(model.Provider, model.Code, isPersistent: model.RememberMe, rememberBrowser: model.RememberBrowser);
             switch (result)
             {
                 case SignInStatus.Success:
@@ -162,7 +196,7 @@ namespace BookStore.Controllers
                     await UserManager.AddToRoleAsync(user.Id, "user");
                     await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
 
-                    return RedirectToAction("Index", "Home");
+                    return RedirectToAction("Index", "Books");
                 }
                 AddErrors(result);
             }
@@ -391,7 +425,7 @@ namespace BookStore.Controllers
         public ActionResult LogOff()
         {
             AuthenticationManager.SignOut(DefaultAuthenticationTypes.ApplicationCookie);
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("Index", "Books");
         }
 
         //
@@ -448,7 +482,7 @@ namespace BookStore.Controllers
             {
                 return Redirect(returnUrl);
             }
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("Index", "Books");
         }
 
         internal class ChallengeResult : HttpUnauthorizedResult

@@ -7,6 +7,8 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using BookStore.Models;
+using System.Net.Mail;
+using System.Net;
 
 namespace BookStore.Controllers
 {
@@ -18,6 +20,39 @@ namespace BookStore.Controllers
 
         public ManageController()
         {
+        }
+
+        [HttpPost]
+        public ActionResult ReportBug()
+        { 
+            MailMessage o = new MailMessage("deulinkonstantin@gmail.com", "inickita10@gmail.com", Request.Form["Name"], Request.Form["Report"]);
+            NetworkCredential netCred = new NetworkCredential("deulinkonstantin@gmail.com", "justd01t");
+            SmtpClient smtpobj = new SmtpClient("smtp.live.com", 587);
+            smtpobj.EnableSsl = true;
+            smtpobj.Credentials = netCred;
+            smtpobj.Send(o);
+
+            return View();
+        }
+
+        public ActionResult GetPurchased()
+        {
+            ApplicationUserManager userManager = HttpContext.GetOwinContext()
+                                                    .GetUserManager<ApplicationUserManager>();
+
+            ApplicationUser user = userManager.FindById(User.Identity.GetUserId());
+
+            return View("Purchased", user.Purchased.ToList());
+        }
+
+        public ActionResult GetWishlist()
+        {
+            ApplicationUserManager userManager = HttpContext.GetOwinContext()
+                                                    .GetUserManager<ApplicationUserManager>();
+
+            ApplicationUser user = userManager.FindById(User.Identity.GetUserId());
+
+            return View("Wishlist", user.Wishlist.ToList());
         }
 
         public ManageController(ApplicationUserManager userManager, ApplicationSignInManager signInManager)
@@ -67,10 +102,8 @@ namespace BookStore.Controllers
             var model = new IndexViewModel
             {
                 HasPassword = HasPassword(),
-                PhoneNumber = await UserManager.GetPhoneNumberAsync(userId),
-                TwoFactor = await UserManager.GetTwoFactorEnabledAsync(userId),
-                Logins = await UserManager.GetLoginsAsync(userId),
-                BrowserRemembered = await AuthenticationManager.TwoFactorBrowserRememberedAsync(userId)
+                Wishlist = UserManager.FindById(userId.ToString()).Wishlist.Count,
+                Purchased = UserManager.FindById(userId.ToString()).Purchased.Count,
             };
             return View(model);
         }

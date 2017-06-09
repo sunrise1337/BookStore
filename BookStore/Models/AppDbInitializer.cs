@@ -23,6 +23,7 @@ namespace BookStore.Models
             var admin = new ApplicationUser { UserName = "admin@mail.ru" };
             string password = "admin123";
             var result = userManager.Create(admin, password);
+            
 
             // если создание пользователя прошло успешно
             if (result.Succeeded)

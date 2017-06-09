@@ -1,0 +1,5 @@
+﻿@model BookStore.Models.ApplicationUser
+
+<td id='role@(Model.Id)'>
+    @Ajax.ActionLink("asd", "MakeUser", new { uname = Model.UserName }, new AjaxOptions { UpdateTargetId = "role" + Model.Id, InsertionMode = InsertionMode.Replace, HttpMethod = "POST" })
+</td>
