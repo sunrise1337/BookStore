@@ -33,6 +33,28 @@ namespace BookStore.Controllers
             return View(context.Users.ToList());
         }
 
+        public ActionResult GetPurchased(string uname)
+        {
+            ApplicationUserManager userManager = HttpContext.GetOwinContext()
+                                                    .GetUserManager<ApplicationUserManager>();
+
+            ApplicationUser user = userManager.FindByName(uname);
+            ViewBag.Name = user.UserName + " purchased books";
+
+            return View("Purchased", user.Purchased.ToList());
+        }
+
+        public ActionResult GetWishlist(string uname)
+        {
+            ApplicationUserManager userManager = HttpContext.GetOwinContext()
+                                                    .GetUserManager<ApplicationUserManager>();
+
+            ApplicationUser user = userManager.FindByName(uname);
+            ViewBag.Name = user.UserName + " wished books";
+
+            return View("Wishlist", user.Wishlist.ToList());
+        }
+
         public ActionResult MinusKarma(string uname)
         {
             var u = new ApplicationUser();

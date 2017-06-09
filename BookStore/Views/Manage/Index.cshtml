@@ -25,7 +25,6 @@
             </dd>
         }
 
-
         <dt>Password:</dt>
         <dd>
             [
@@ -47,8 +46,19 @@
 
         <dt>Wishlist:</dt>
         <dd>
-            @Model.Wishlist
+            @Html.ActionLink(Model.Wishlist.ToString(), "GetWishlist")
         </dd>
-        
+
+        <dd>
+            @using (Html.BeginForm("ReportBug", "Manage", FormMethod.Post))
+            {
+                <input type="hidden" name="report" />
+                <p>Ваше имя: </p>
+                @Html.TextBox("Name", "Введите имя")
+                <p>Ваша жалоба :</p>
+                @Html.TextBox("Report", "Введите текст")
+                <p><input type="submit" value="Отправить" /></p>
+            }
+        </dd>
     </dl>
 </div>

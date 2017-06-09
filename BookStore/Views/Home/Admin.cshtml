@@ -53,10 +53,10 @@
             @Ajax.ActionLink("+", "PlusKarma", new { uname = item.UserName }, new AjaxOptions { UpdateTargetId = "karma" + item.Id, InsertionMode = InsertionMode.Replace, HttpMethod = "POST" })
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.Purchased.Count)
+            @Html.ActionLink(item.Purchased.Count.ToString(), "GetPurchased", new { uname = item.UserName })
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.Wishlist.Count)
+            @Html.ActionLink(item.Wishlist.Count.ToString(), "GetWishlist", new { uname = item.UserName })
         </td>
         <td>
             @Html.ActionLink("Delete", "Delete", new { id=item.Id })

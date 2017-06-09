@@ -9,6 +9,9 @@ using System.Web;
 using System.Web.Mvc;
 using System.Web.UI.WebControls;
 using BookStore.Models;
+using Microsoft.Ajax.Utilities;
+using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.Owin;
 
 namespace BookStore.Controllers
 {
@@ -22,8 +25,14 @@ namespace BookStore.Controllers
         {
             ViewBag.NameSortParm = String.IsNullOrEmpty(sortOrder) ? "Name desc" : "";
             ViewBag.PriceSortParm = sortOrder == "Price" ? "Price desc" : "Price";
+            ViewBag.GenreSortParm = sortOrder == "Genre" ? "Genre desc" : "Genre";
+            ViewBag.AuthorSortParm = sortOrder == "Author" ? "Author desc" : "Author";
+            ViewBag.RateSortParm = sortOrder == "Rate" ? "Rate desc" : "Rate";
 
             var books = db.Books.Include(b => b.Author).Include(b => b.Genre);
+
+            ViewBag.TopBooks = books.OrderByDescending(i => i.Rate).Take(5).DistinctBy(p => new { p.Name, p.Author.FirstName, p.Author.LastName }).ToList();
+            ViewBag.TopAuthors = db.Authors.OrderByDescending(i => i.Rate).Take(5).DistinctBy(p => new { p.FirstName, p.LastName }).ToList();
 
             switch (sortOrder)
             {
@@ -36,6 +45,24 @@ namespace BookStore.Controllers
                 case "Price desc":
                     books = books.OrderByDescending(s => s.Price);
                     break;
+                case "Genre":
+                    books = books.OrderBy(s => s.Genre.Name);
+                    break;
+                case "Genre desc":
+                    books = books.OrderByDescending(s => s.Genre.Name);
+                    break;
+                case "Author":
+                    books = books.OrderBy(s => s.Author.FirstName);
+                    break;
+                case "Author desc":
+                    books = books.OrderByDescending(s => s.Author.FirstName);
+                    break;
+                case "Rate":
+                    books = books.OrderBy(s => s.Rate);
+                    break;
+                case "Rate desc":
+                    books = books.OrderByDescending(s => s.Rate);
+                    break;
                 default:
                     books = books.OrderBy(s => s.Name);
                     break;
@@ -47,7 +74,6 @@ namespace BookStore.Controllers
                 //Search
                 books = books.Where(x => x.Name.Contains(searchName) || x.Author.FirstName.Contains(searchName) 
                 || x.Author.LastName.Contains(searchName) || x.Genre.Name.Contains(searchName));
-                //return View(books.ToList());
             }
 
             return View(books.ToList());
@@ -107,7 +133,7 @@ namespace BookStore.Controllers
 
         public ActionResult Create()
         {
-            ViewBag.AuthorId = new SelectList(db.Authors, "Id", "FirstName");
+            ViewBag.AuthorId = new SelectList(db.Authors, "Id", "LastName");
             ViewBag.GenreId = new SelectList(db.Genres, "Id", "Name");
 
             string[] filePaths = Directory.GetFiles(Server.MapPath("~/BookImages/"));
@@ -133,7 +159,7 @@ namespace BookStore.Controllers
                 return RedirectToAction("Index");
             }
 
-            ViewBag.AuthorId = new SelectList(db.Authors, "Id", "FirstName", book.AuthorId);
+            ViewBag.AuthorId = new SelectList(db.Authors, "Id", "LastName", book.AuthorId);
             ViewBag.GenreId = new SelectList(db.Genres, "Id", "Name", book.GenreId);
             return View(book);
         }
@@ -191,7 +217,7 @@ namespace BookStore.Controllers
             {
                 return HttpNotFound();
             }
-            ViewBag.AuthorId = new SelectList(db.Authors, "Id", "FirstName", book.AuthorId);
+            ViewBag.AuthorId = new SelectList(db.Authors, "Id", "LastName", book.AuthorId);
             ViewBag.GenreId = new SelectList(db.Genres, "Id", "Name", book.GenreId);
 
             string[] filePaths = Directory.GetFiles(Server.MapPath("~/BookImages/"));
@@ -217,8 +243,36 @@ namespace BookStore.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            ViewBag.AuthorId = new SelectList(db.Authors, "Id", "FirstName", book.AuthorId);
+            ViewBag.AuthorId = new SelectList(db.Authors, "Id", "LastName", book.AuthorId);
             ViewBag.GenreId = new SelectList(db.Genres, "Id", "Name", book.GenreId);
+            return View(book);
+        }
+
+        #endregion
+
+
+        #region BuyBook
+
+        [Authorize]
+        public ActionResult BuyBook(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Book book = db.Books.Find(id);
+            if (book == null)
+            {
+                return HttpNotFound();
+            }
+
+            db.Books.Find(id).Amount -= 1;
+
+            ApplicationUserManager userManager = HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
+            ApplicationUser user = userManager.FindById(User.Identity.GetUserId());
+            db.Users.Find(user.Id).Purchased.Add(book);
+            db.SaveChanges();
+
             return View(book);
         }
 
@@ -251,6 +305,61 @@ namespace BookStore.Controllers
             db.Books.Remove(book);
             db.SaveChanges();
             return RedirectToAction("Index");
+        }
+
+        #endregion
+
+
+        #region Create Author
+
+        public ActionResult CreateAuthor()
+        {
+            //ViewBag.AuthorId = new SelectList(db.Authors, "Id", "FirstName");
+            //ViewBag.GenreId = new SelectList(db.Genres, "Id", "Name");
+
+            return View();
+        }
+
+        // POST: Authors/Create
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult CreateAuthor(Author author)
+        {
+            if (ModelState.IsValid)
+            {
+                db.Authors.Add(author);
+                db.SaveChanges();
+                return RedirectToAction("Index");
+            }
+
+            //ViewBag.AuthorId = new SelectList(db.Authors, "Id", "FirstName", book.AuthorId);
+            //ViewBag.GenreId = new SelectList(db.Genres, "Id", "Name", book.GenreId);
+            return View(author);
+        }
+
+        #endregion
+
+
+        #region Create Genre
+
+        public ActionResult CreateGenre()
+        {
+            return View();
+        }
+
+        // POST: Genres/Create
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult CreateGenre(Genre genre)
+        {
+            if (ModelState.IsValid)
+            {
+                db.Genres.Add(genre);
+                db.SaveChanges();
+                return RedirectToAction("Index");
+            }
+            
+            return View(genre);
         }
 
         #endregion
