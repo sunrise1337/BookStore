@@ -47,5 +47,4 @@
         </dd>
     </dl>
 </div>
-<p><a class="btn btn-primary" data-fancybox-type="iframe"
-       href="@Url.Action("Index", "Books")">Back to List</a></p>
+@Html.ActionLink("Back to List", "Index", new { controller = "Books" }, new { @class = "btn btn-primary" })
