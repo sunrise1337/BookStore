@@ -267,6 +267,8 @@ namespace BookStore.Controllers
             }
 
             db.Books.Find(id).Amount -= 1;
+            db.Books.Find(id).Rate += 1;
+            db.Books.Find(id).Author.Rate += 1;
 
             ApplicationUserManager userManager = HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
             ApplicationUser user = userManager.FindById(User.Identity.GetUserId());
