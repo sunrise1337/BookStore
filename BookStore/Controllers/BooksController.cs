@@ -9,6 +9,9 @@ using System.Web;
 using System.Web.Mvc;
 using System.Web.UI.WebControls;
 using BookStore.Models;
+using Microsoft.Ajax.Utilities;
+using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.Owin;
 
 namespace BookStore.Controllers
 {
@@ -28,8 +31,8 @@ namespace BookStore.Controllers
 
             var books = db.Books.Include(b => b.Author).Include(b => b.Genre);
 
-            ViewBag.TopBooks = books.OrderByDescending(i => i.Rate).Take(5).ToList();
-            ViewBag.TopAuthors = db.Authors.OrderByDescending(i => i.Rate).Take(5).ToList();
+            ViewBag.TopBooks = books.OrderByDescending(i => i.Rate).Take(5).DistinctBy(p => new { p.Name, p.Author.FirstName, p.Author.LastName }).ToList();
+            ViewBag.TopAuthors = db.Authors.OrderByDescending(i => i.Rate).Take(5).DistinctBy(p => new { p.FirstName, p.LastName }).ToList();
 
             switch (sortOrder)
             {
@@ -130,7 +133,7 @@ namespace BookStore.Controllers
 
         public ActionResult Create()
         {
-            ViewBag.AuthorId = new SelectList(db.Authors, "Id", "FirstName");
+            ViewBag.AuthorId = new SelectList(db.Authors, "Id", "LastName");
             ViewBag.GenreId = new SelectList(db.Genres, "Id", "Name");
 
             string[] filePaths = Directory.GetFiles(Server.MapPath("~/BookImages/"));
@@ -156,7 +159,7 @@ namespace BookStore.Controllers
                 return RedirectToAction("Index");
             }
 
-            ViewBag.AuthorId = new SelectList(db.Authors, "Id", "FirstName", book.AuthorId);
+            ViewBag.AuthorId = new SelectList(db.Authors, "Id", "LastName", book.AuthorId);
             ViewBag.GenreId = new SelectList(db.Genres, "Id", "Name", book.GenreId);
             return View(book);
         }
@@ -214,7 +217,7 @@ namespace BookStore.Controllers
             {
                 return HttpNotFound();
             }
-            ViewBag.AuthorId = new SelectList(db.Authors, "Id", "FirstName", book.AuthorId);
+            ViewBag.AuthorId = new SelectList(db.Authors, "Id", "LastName", book.AuthorId);
             ViewBag.GenreId = new SelectList(db.Genres, "Id", "Name", book.GenreId);
 
             string[] filePaths = Directory.GetFiles(Server.MapPath("~/BookImages/"));
@@ -240,7 +243,7 @@ namespace BookStore.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            ViewBag.AuthorId = new SelectList(db.Authors, "Id", "FirstName", book.AuthorId);
+            ViewBag.AuthorId = new SelectList(db.Authors, "Id", "LastName", book.AuthorId);
             ViewBag.GenreId = new SelectList(db.Genres, "Id", "Name", book.GenreId);
             return View(book);
         }
@@ -249,7 +252,8 @@ namespace BookStore.Controllers
 
 
         #region BuyBook
-        
+
+        [Authorize]
         public ActionResult BuyBook(int? id)
         {
             if (id == null)
@@ -263,6 +267,10 @@ namespace BookStore.Controllers
             }
 
             db.Books.Find(id).Amount -= 1;
+
+            ApplicationUserManager userManager = HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
+            ApplicationUser user = userManager.FindById(User.Identity.GetUserId());
+            db.Users.Find(user.Id).Purchased.Add(book);
             db.SaveChanges();
 
             return View(book);

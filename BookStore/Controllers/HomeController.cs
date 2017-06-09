@@ -28,7 +28,7 @@ namespace BookStore.Controllers
 
         public ActionResult Admin()
         {
-           
+
             return View(context.Users.ToList());
         }
 
@@ -43,11 +43,9 @@ namespace BookStore.Controllers
                     user.Karma -= 5;
                     u = user;
 
-                   
+
                 }
             }
-
-
 
             context.SaveChanges();
             return PartialView("MinusKarma", u);

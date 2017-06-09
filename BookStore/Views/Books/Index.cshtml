@@ -1,4 +1,5 @@
-﻿@model IEnumerable<BookStore.Models.Book>
+﻿@using BookStore.Models
+@model IEnumerable<BookStore.Models.Book>
 
 @{
     ViewBag.Title = "Index";
@@ -129,7 +130,7 @@
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.ImagePath)
+            @*@Html.DisplayNameFor(model => model.ImagePath)*@
         </th>
         <th>
             @*@Html.DisplayNameFor(model => model.Name)*@
@@ -193,6 +194,77 @@
         </tr>
     }
 </table>
+
+<h2>Top 5 Authors</h2>
+<table class="table">
+    <tr>
+        <th>
+            First Name
+        </th>
+        <th>
+            Last Name
+        </th>
+        <th>
+            Rate
+        </th>
+    </tr>
+    @foreach (var item in ((IEnumerable<Author>) ViewBag.TopAuthors))
+    {
+        <tr>
+            <td>
+                @item.FirstName
+            </td>
+            <td>
+                @item.LastName
+            </td>
+            <td>
+                @item.Rate
+            </td>
+        </tr>
+    }
+</table>
+
+<h2>Top 5 Books</h2>
+<table class="table">
+    <tr>
+        <th>
+            Name
+        </th>
+        <th>
+            Author
+        </th>
+        <th>
+            Genre
+        </th>
+        <th>
+            Rate
+        </th>
+        <th>
+            Price
+        </th>
+    </tr>
+    @foreach (var item in ((IEnumerable<Book>)ViewBag.TopBooks))
+    {
+        <tr>
+            <td>
+                @item.Name
+            </td>
+            <td>
+                @item.Author.LastName
+            </td>
+            <td>
+                @item.Genre.Name
+            </td>
+            <td>
+                @item.Rate
+            </td>
+            <td>
+                @item.Price
+            </td>
+        </tr>
+    }
+</table>
+
 @*<div id="pricing-table">
     <div id="pricing-table-header">
         <h1>Book 1</h1>

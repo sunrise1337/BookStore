@@ -283,14 +283,11 @@
     <Content Include="Views\Books\Details.cshtml" />
     <Content Include="Views\Books\Edit.cshtml" />
     <Content Include="Views\Books\Index.cshtml" />
-<<<<<<< HEAD
     <Content Include="Views\Books\CreateAuthor.cshtml" />
     <Content Include="Views\Books\CreateGenre.cshtml" />
     <Content Include="Views\Books\BuyBook.cshtml" />
-=======
     <Content Include="Views\Home\Admin.cshtml" />
     <Content Include="Views\Shared\MinusKarma.cshtml" />
->>>>>>> kostyanBatya
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
