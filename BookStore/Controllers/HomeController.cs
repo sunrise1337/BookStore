@@ -15,16 +15,7 @@ namespace BookStore.Controllers
 
         ApplicationDbContext context = new ApplicationDbContext();
 
-        public ActionResult Index()
-        {
-            IList<string> roles = new List<string> { "Роль не определена" };
-            ApplicationUserManager userManager = HttpContext.GetOwinContext()
-                                                    .GetUserManager<ApplicationUserManager>();
-            ApplicationUser user = userManager.FindByEmail(User.Identity.Name);
-            if (user != null)
-                roles = userManager.GetRoles(user.Id);
-            return View(roles);
-        }
+        
 
         public ActionResult Admin()
         {
@@ -68,18 +59,8 @@ namespace BookStore.Controllers
             return PartialView("MinusKarma", u);
         }
 
-        public ActionResult About()
-        {
-            ViewBag.Message = "Your application description page.";
+        
 
-            return View();
-        }
 
-        public ActionResult Contact()
-        {
-            ViewBag.Message = "Your contact page.";
-
-            return View();
-        }
     }
 }
