@@ -171,7 +171,8 @@ else
         <tr>
             <td>
                 @*@Html.DisplayFor(modelItem => item.ImagePath)*@
-                <img src="@Url.Content(item.ImagePath)" class="imgBox" />
+                <a data-fancybox-type="iframe"
+                   href="@Url.Action("Details", "Books", new { id = item.Id })"><img src="@Url.Content(item.ImagePath)" class="imgBox" /></a>
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Name)
@@ -197,13 +198,11 @@ else
                 @if (User.IsInRole("admin"))
                 {
                     @Html.ActionLink("Edit", "Edit", new { id = item.Id }, new { @class = "btn btn-primary" })
-                    @Html.ActionLink("Details", "Details", new { id = item.Id }, new { @class = "btn btn-primary" })
+                    @*@Html.ActionLink("Details", "Details", new { id = item.Id }, new { @class = "btn btn-primary" })*@
                     @Html.ActionLink("Delete", "Delete", new { id = item.Id }, new { @class = "btn btn-primary" })
                 }
-                
                 @Html.ActionLink("Buy", "BuyBook", new {id = item.Id}, new {@class = "btn btn-primary"})
                 @Html.ActionLink("WishList", "WishBook", new {id = item.Id}, new {@class = "btn btn-primary"})
-
             </td>
         </tr>
     }

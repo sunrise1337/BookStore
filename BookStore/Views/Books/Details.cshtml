@@ -68,6 +68,9 @@
     </dl>
 </div>
 <p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }, new { @class = "btn btn-primary" })
-    @Html.ActionLink("Back to List", "Index", new { controller = "Books"}, new { @class = "btn btn-primary" })
+    @if (User.IsInRole("admin"))
+    {
+        @Html.ActionLink("Edit", "Edit", new { id = Model.Id }, new { @class = "btn btn-primary" })
+    }
+    @Html.ActionLink("Back to List", "Index", new {controller = "Books"}, new {@class = "btn btn-primary"})
 </p>
