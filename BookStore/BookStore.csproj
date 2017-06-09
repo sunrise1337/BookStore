@@ -207,6 +207,10 @@
     <Compile Include="Migrations\201706061911380_BooksAdd.Designer.cs">
       <DependentUpon>201706061911380_BooksAdd.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201706082253391_userBan.cs" />
+    <Compile Include="Migrations\201706082253391_userBan.Designer.cs">
+      <DependentUpon>201706082253391_userBan.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\AppDbInitializer.cs" />
@@ -270,12 +274,9 @@
     <Content Include="Views\Account\ResetPasswordConfirmation.cshtml" />
     <Content Include="Views\Account\SendCode.cshtml" />
     <Content Include="Views\Account\VerifyCode.cshtml" />
-    <Content Include="Views\Manage\AddPhoneNumber.cshtml" />
     <Content Include="Views\Manage\ChangePassword.cshtml" />
     <Content Include="Views\Manage\Index.cshtml" />
-    <Content Include="Views\Manage\ManageLogins.cshtml" />
     <Content Include="Views\Manage\SetPassword.cshtml" />
-    <Content Include="Views\Manage\VerifyPhoneNumber.cshtml" />
     <Content Include="Views\Shared\Lockout.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\Books\Create.cshtml" />
@@ -285,6 +286,8 @@
     <Content Include="Views\Books\Index.cshtml" />
     <Content Include="Views\Home\Admin.cshtml" />
     <Content Include="Views\Shared\MinusKarma.cshtml" />
+    <Content Include="Views\Shared\ChangeRole.cshtml" />
+    <Content Include="Views\Manage\Purchased.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -314,6 +317,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201706061911380_BooksAdd.resx">
       <DependentUpon>201706061911380_BooksAdd.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201706082253391_userBan.resx">
+      <DependentUpon>201706082253391_userBan.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

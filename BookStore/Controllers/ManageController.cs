@@ -20,6 +20,16 @@ namespace BookStore.Controllers
         {
         }
 
+        public ActionResult GetPurchased()
+        {
+            ApplicationUserManager userManager = HttpContext.GetOwinContext()
+                                                    .GetUserManager<ApplicationUserManager>();
+
+            ApplicationUser user = userManager.FindById(User.Identity.GetUserId());
+
+            return View("Purchased", user.Purchased.ToList());
+        }
+
         public ManageController(ApplicationUserManager userManager, ApplicationSignInManager signInManager)
         {
             UserManager = userManager;
@@ -67,10 +77,8 @@ namespace BookStore.Controllers
             var model = new IndexViewModel
             {
                 HasPassword = HasPassword(),
-                PhoneNumber = await UserManager.GetPhoneNumberAsync(userId),
-                TwoFactor = await UserManager.GetTwoFactorEnabledAsync(userId),
-                Logins = await UserManager.GetLoginsAsync(userId),
-                BrowserRemembered = await AuthenticationManager.TwoFactorBrowserRememberedAsync(userId)
+                Wishlist = UserManager.FindById(userId.ToString()).Wishlist.Count,
+                Purchased = UserManager.FindById(userId.ToString()).Purchased.Count,
             };
             return View(model);
         }

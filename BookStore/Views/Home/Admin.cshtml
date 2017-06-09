@@ -15,6 +15,9 @@
             @Html.DisplayNameFor(model => model.UserName)
         </th>
         <th>
+            Role
+        </th>
+        <th>
             @Html.DisplayNameFor(model => model.Karma)
         </th>
         <th>
@@ -31,6 +34,18 @@
         <td>
             @Html.DisplayFor(modelItem => item.UserName)
         </td>
+        @if (item.Roles.Count >= 2)
+        {
+            <td id='role@(item.Id)'>
+                Admin
+            </td>
+        }
+        else
+        {
+            <td id='role@(item.Id)'>
+                User
+            </td>
+        }
         <td id='karma@(item.Id)'>
             @Html.DisplayFor(modelItem => item.Karma)
 
@@ -44,7 +59,6 @@
             @Html.DisplayFor(modelItem => item.Wishlist.Count)
         </td>
         <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
             @Html.ActionLink("Delete", "Delete", new { id=item.Id })
         </td>
     </tr>

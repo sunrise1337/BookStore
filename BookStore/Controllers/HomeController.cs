@@ -1,8 +1,10 @@
 ﻿using BookStore.Models;
 using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.AspNet.Identity.Owin;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -28,11 +30,10 @@ namespace BookStore.Controllers
 
         public ActionResult Admin()
         {
-           
             return View(context.Users.ToList());
         }
 
-        public async System.Threading.Tasks.Task<ActionResult> MinusKarma(string uname)
+        public ActionResult MinusKarma(string uname)
         {
             var u = new ApplicationUser();
 
@@ -41,13 +42,12 @@ namespace BookStore.Controllers
                 if (user.UserName == uname)
                 {
                     user.Karma -= 5;
-                    u = user;
+                    if (user.Karma <= 0 && user.Roles.Count >= 2)
+                        user.isBanned = true;
 
-                   
+                    u = user;
                 }
             }
-
-
 
             context.SaveChanges();
             return PartialView("MinusKarma", u);

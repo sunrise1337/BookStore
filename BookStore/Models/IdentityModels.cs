@@ -13,6 +13,7 @@ namespace BookStore.Models
         public virtual ICollection<Comment> Comments { get; set; }
         public virtual ICollection<Book> Wishlist { get; set; }
         public virtual ICollection<Book> Purchased { get; set; }
+        public bool isBanned { get; set; }
         public int Karma { get; set; }
 
         public ApplicationUser()
@@ -21,6 +22,7 @@ namespace BookStore.Models
             Wishlist = new List<Book>();
             Purchased = new List<Book>();
             Karma = 100;
+            isBanned = false;
         }
 
         public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<ApplicationUser> manager)

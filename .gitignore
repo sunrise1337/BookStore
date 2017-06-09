@@ -20,3 +20,5 @@ BookStore/obj/Debug/BookStore.csprojResolveAssemblyReference.cache
 BookStore/obj/Debug/BookStore.dll
 BookStore/obj/Debug/BookStore.pdb
 BookStore/obj/Debug/DesignTimeResolveAssemblyReferencesInput.cache
+BookStore/App_Data/aspnet-BookStore-20170528013356.mdf
+BookStore/App_Data/aspnet-BookStore-20170528013356_log.ldf

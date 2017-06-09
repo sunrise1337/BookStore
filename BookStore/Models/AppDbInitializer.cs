@@ -3,7 +3,7 @@ using Microsoft.AspNet.Identity.EntityFramework;
 using System.Data.Entity;
 namespace BookStore.Models
 {
-    public class AppDbInitializer : DropCreateDatabaseAlways<ApplicationDbContext>
+    public class AppDbInitializer : CreateDatabaseIfNotExists<ApplicationDbContext>
     {
         protected override void Seed(ApplicationDbContext context)
         {
@@ -23,6 +23,7 @@ namespace BookStore.Models
             var admin = new ApplicationUser { UserName = "admin@mail.ru" };
             string password = "admin123";
             var result = userManager.Create(admin, password);
+            
 
             // если создание пользователя прошло успешно
             if (result.Succeeded)
